@@ -236,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div>Memproses: <span class="text-white">' + email + '</span></div><div class="text-yellow-400">[PROCESS]</div>';
                 try {
                     await callAPI('/send', { gmail: email });
+                        localStorage.setItem('padilsync_last_email', email);
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
                     terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div class="font-bold">[SUCCESS]</div><div>Magic link berhasil dikirim!</div>';
