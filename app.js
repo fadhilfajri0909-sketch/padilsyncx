@@ -261,10 +261,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 var terminal = document.getElementById('terminalVerif');
                 var btn = document.getElementById('btnVerif');
                 if (!link) { alert('Tempel magic link terlebih dahulu!'); return; }
+                var savedEmail = localStorage.getItem('padilsync_last_email') || '';
+if (!savedEmail) { alert('Kirim link dulu di tab Activation!'); return; }
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memverifikasi...';
                 try {
-                    await callAPI('/verif', { link: link });
+                    await callAPI('/verif', { gmail: savedEmail, link: link });
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-shield-alt"></i> Proses Verifikasi';
                     terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div class="font-bold">[SUCCESS]</div><div>Akun Premium diaktifkan!</div>';
