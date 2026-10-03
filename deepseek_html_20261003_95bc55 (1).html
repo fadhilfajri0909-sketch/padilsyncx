@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PadilSync</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script type="module">
+try {
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js");
+    const { getDatabase, ref, onValue, runTransaction } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js");
+    const firebaseConfig = {
+        apiKey: "AIzaSyDQ8KiN47wGVLsBb6N_HgZRclKm08QZDLk",
+        authDomain: "padilsync.firebaseapp.com",
+        databaseURL: "https://padilsync-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "padilsync",
+        storageBucket: "padilsync.firebasestorage.app",
+        messagingSenderId: "605098816444",
+        appId: "1:605098816444:web:7b960e01e1ab11d35971b9"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    window.firebaseDB = db;
+    window.firebaseRef = ref;
+    window.firebaseOnValue = onValue;
+    window.firebaseRunTransaction = runTransaction;
+    window.firebaseReady = true;
+} catch (e) {
+    console.error('[FIREBASE]', e);
+    window.firebaseReady = false;
+}
+</script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="bg-white border-b-2 border-gray-900 p-3 sticky top-0 z-50">
+<div class="max-w-md mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#0f172a,#1e293b);border:2px solid #0f172a">
+<i class="fas fa-bolt text-green-400 text-lg"></i>
+</div>
+<div>
+<h1 class="font-extrabold text-base leading-tight">PadilSync</h1>
+<span class="text-[10px] bg-yellow-300 px-2 py-0.5 rounded border-2 border-gray-900 font-bold">AM PREM</span>
+</div>
+</div>
+<div class="flex gap-2 items-center">
+<a href="https://wa.me/6283182365070" target="_blank" class="btn-neo px-4 py-2.5 text-xs btn-green" style="width:auto">
+<i class="fab fa-whatsapp text-white text-base"></i>
+<span class="hidden" style="display:inline">Contact Owner</span>
+</a>
+</div>
+</div>
+</nav>
+
+<main class="max-w-md mx-auto p-4 space-y-4">
+
+<!-- CONTACT OWNER BANNER -->
+<a href="https://wa.me/6283182365070" target="_blank" class="card-neo p-3 flex items-center gap-3" style="background:linear-gradient(135deg,#25D366,#128C7E);text-decoration:none">
+<div class="w-10 h-10 bg-white rounded-full flex items-center justify-center border-2 border-gray-900 flex-shrink-0">
+<i class="fab fa-whatsapp text-green-600 text-lg"></i>
+</div>
+<div class="flex-1">
+<div class="text-xs font-bold text-white">Ada masalah? Contact Owner</div>
+<div class="text-[10px] text-white/80">Klik untuk chat via WhatsApp</div>
+</div>
+<i class="fas fa-chevron-right text-white text-sm"></i>
+</a>
+
+<!-- STATUS BAR -->
+<div class="grid grid-cols-3 gap-2 text-[10px] font-bold">
+<div class="card-neo p-3 flex items-center gap-2">
+<i class="fas fa-calendar-alt text-gray-600 text-base"></i>
+<div>
+<div class="text-gray-500 text-[8px] uppercase tracking-wider">Tanggal</div>
+<div id="date" class="text-xs">-</div>
+</div>
+</div>
+<div class="card-neo p-3 flex items-center gap-2" style="background:#fde047">
+<i class="fas fa-clock text-gray-900 text-base"></i>
+<div>
+<div class="text-gray-700 text-[8px] uppercase tracking-wider">Waktu WIB</div>
+<div id="clock" class="text-xs">--:--:--</div>
+</div>
+</div>
+<div class="card-neo p-3 flex items-center gap-2" style="background:#a3e635">
+<i class="fas fa-battery-three-quarters text-gray-900 text-base"></i>
+<div>
+<div class="text-gray-700 text-[8px] uppercase tracking-wider">Baterai</div>
+<div id="battery" class="text-xs">--%</div>
+</div>
+</div>
+</div>
+
+<!-- INFO BANNER -->
+<div class="card-neo p-3 flex items-center gap-2 text-[10px] font-bold" style="background:#fde047">
+<i class="fas fa-info-circle text-base"></i>
+<span class="text-gray-900">wa.me/padilsync • khusus pengguna apk</span>
+</div>
+
+<!-- TAB ACTIVATION -->
+<div id="tab-activation" class="tab-content active space-y-4">
+<div class="text-center pt-2">
+<span class="bg-yellow-300 border-2 border-black px-4 py-1.5 text-[10px] font-bold rounded-lg shadow-[2px_2px_0px_#000] inline-flex items-center gap-1.5 mb-3">
+<i class="fas fa-crown"></i> ACTIVATION MANUAL
+</span>
+<h2 class="text-3xl font-extrabold leading-tight tracking-tight">Kirim Link &<br>Verifikasi Link</h2>
+<p class="text-xs text-gray-600 mt-2 px-4">Kirim magic link ke Gmail lalu verifikasi untuk aktivasi Alight Motion Premium 1 tahun — otomatis, tanpa kata sandi.</p>
+</div>
+
+<div class="grid grid-cols-2 gap-3">
+<div class="card-neo p-4">
+<div class="flex items-center gap-1.5 text-[10px] text-gray-500 font-bold uppercase tracking-wider">
+<i class="fas fa-globe-asia text-blue-500"></i> Global
+</div>
+<div class="flex justify-between items-end mt-2">
+<span id="total-global" class="text-3xl font-extrabold">0</span>
+<i class="fas fa-trophy text-gray-300 text-lg"></i>
+</div>
+</div>
+<div class="card-neo p-4" style="background:#fde047">
+<div class="flex items-center gap-1.5 text-[10px] text-gray-700 font-bold uppercase tracking-wider">
+<i class="fas fa-calendar-day text-gray-800"></i> Hari Ini
+</div>
+<div class="flex justify-between items-end mt-2">
+<span id="total-hari-ini" class="text-3xl font-extrabold">0</span>
+<i class="fas fa-clock text-gray-700 text-lg"></i>
+</div>
+</div>
+</div>
+
+<div class="card-neo p-4" style="background:linear-gradient(135deg,#a3e635,#22d3ee)">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-gray-900">
+<i class="fas fa-user text-blue-500 text-lg"></i>
+</div>
+<div>
+<div class="text-[10px] text-gray-800 font-bold uppercase tracking-wider flex items-center gap-1">
+<i class="fas fa-user-circle"></i> Kamu Pernah Pakai
+</div>
+<div class="flex items-baseline gap-1">
+<span id="user-counter" class="text-2xl font-extrabold text-gray-900">0</span>
+<span class="text-xs font-bold text-gray-800">kali</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<div class="text-[9px] text-gray-800 font-bold">Terakhir pakai:</div>
+<div id="last-used" class="text-[10px] font-bold text-gray-900">-</div>
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-2 gap-3">
+<button id="btnKirimTop" class="btn-neo text-xs btn-black"><i class="fas fa-envelope"></i> Kirim Link</button>
+<button id="btnVerifTop" class="btn-neo text-xs btn-outline"><i class="fas fa-shield-halved"></i> Verifikasi</button>
+</div>
+
+<div class="card-neo p-5 space-y-4">
+<div class="text-[10px] font-bold text-gray-500 tracking-widest uppercase">LANGKAH 1 — KIRIM MAGIC LINK</div>
+<div>
+<label class="block text-xs font-bold mb-1.5">Alamat Gmail</label>
+<input type="email" id="emailInput" placeholder="user@gmail.com">
+</div>
+<button id="btnKirimLink" class="btn-neo btn-green text-sm"><i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email</button>
+<button id="btnTempelLink" class="btn-neo btn-outline text-sm"><i class="fas fa-arrow-right"></i> Tempel Magic Link</button>
+</div>
+
+<div class="terminal-box">
+<div class="flex justify-between mb-2 border-b border-gray-700 pb-1 opacity-70">
+<span>>_ am_terminal.log</span>
+<span><i class="fas fa-copy"></i> Salin</span>
+</div>
+<div id="terminalContent">
+<div class="font-bold">[SYSTEM]</div>
+<div>Sistem Verifikasi Alight Motion siap digunakan.</div>
+<div class="font-bold">[READY]</div>
+</div>
+</div>
+
+<div class="card-neo p-5">
+<div class="flex items-center gap-2 text-xs font-bold mb-4 border-b-2 border-gray-200 pb-2">
+<i class="fas fa-info-circle text-blue-500"></i> PANDUAN PENGGUNAAN
+</div>
+<div class="space-y-3">
+<div class="flex gap-3 items-start">
+<div class="icon-badge bg-green-300 font-bold text-xs">1</div>
+<div>
+<div class="text-xs font-bold">MASUKKAN EMAIL</div>
+<div class="text-[10px] text-gray-500 mt-0.5">Ketikkan alamat Gmail kamu. Sistem memicu pengiriman magic link.</div>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<div class="icon-badge bg-green-300 font-bold text-xs">2</div>
+<div>
+<div class="text-xs font-bold">SALIN DARI EMAIL</div>
+<div class="text-[10px] text-gray-500 mt-0.5">Buka inbox Gmail, salin tautan "Sign In" dari Alight Motion.</div>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<div class="icon-badge bg-green-300 font-bold text-xs">3</div>
+<div>
+<div class="text-xs font-bold">AKTIVASI OTOMATIS</div>
+<div class="text-[10px] text-gray-500 mt-0.5">Tempel link di tab Verifikasi lalu tekan Proses.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TAB VERIFIKASI -->
+<div id="tab-verif" class="tab-content space-y-4">
+<div class="text-center pt-2">
+<span class="bg-yellow-300 border-2 border-black px-4 py-1.5 text-[10px] font-bold rounded-lg shadow-[2px_2px_0px_#000] inline-flex items-center gap-1.5 mb-3">
+<i class="fas fa-shield-halved"></i> VERIFIKASI LINK
+</span>
+<h2 class="text-3xl font-extrabold leading-tight">Tempel Magic Link</h2>
+<p class="text-xs text-gray-600 mt-2 px-4">Tempel magic link yang Anda terima di Gmail.</p>
+</div>
+
+<div class="card-neo p-5 space-y-4">
+<div class="text-[10px] font-bold text-gray-500 tracking-widest uppercase">LANGKAH 2 — VERIFIKASI MAGIC LINK</div>
+<div>
+<label class="block text-xs font-bold mb-1.5">Tempel Magic Link dari Email</label>
+<input type="url" id="linkInput" placeholder="https://alight-creative.firebaseapp.com/...">
+</div>
+<button id="btnVerif" class="btn-neo btn-green text-sm"><i class="fas fa-shield-halved"></i> Proses Verifikasi</button>
+<button id="btnKembali" class="btn-neo btn-outline text-sm"><i class="fas fa-arrow-left"></i> Kembali ke Kirim Email</button>
+</div>
+
+<div class="terminal-box">
+<div class="flex justify-between mb-2 border-b border-gray-700 pb-1 opacity-70">
+<span>>_ verif_terminal.log</span>
+<span><i class="fas fa-copy"></i> Salin</span>
+</div>
+<div id="terminalVerif">
+<div class="font-bold">[SYSTEM]</div>
+<div>Sistem Verifikasi Link siap digunakan.</div>
+<div class="font-bold">[READY]</div>
+</div>
+</div>
+</div>
+
+<!-- TAB BULK -->
+<div id="tab-bulk" class="tab-content space-y-4">
+<div class="text-center pt-2">
+<span class="bg-yellow-300 border-2 border-black px-4 py-1.5 text-[10px] font-bold rounded-lg shadow-[2px_2px_0px_#000] inline-flex items-center gap-1.5 mb-3">
+<i class="fas fa-layer-group"></i> BULK GENERATOR
+</span>
+<h2 class="text-3xl font-extrabold leading-tight">Generate Massal<br>Akun Premium</h2>
+<p class="text-xs text-gray-600 mt-2">Maks 5 akun per proses.</p>
+</div>
+
+<div class="card-neo p-5 space-y-4">
+<div class="text-[10px] font-bold text-gray-500 tracking-widest uppercase">KONFIGURASI GENERATE</div>
+<div>
+<label class="block text-xs font-bold mb-1.5">Jumlah Akun (1-5)</label>
+<div class="flex border-2 border-black rounded-xl overflow-hidden">
+<button type="button" id="btnMinus" class="qty-btn">−</button>
+<input type="number" id="jumlahAkun" value="1" readonly class="flex-1 text-center font-bold focus:outline-none" style="font-size:22px">
+<button type="button" id="btnPlus" class="qty-btn">+</button>
+</div>
+</div>
+<button id="btnGenerate" class="btn-neo btn-green text-sm"><i class="fas fa-bolt"></i> Generate Akun Sekarang</button>
+<div id="hasilBulk" class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-6 text-center">
+<div class="flex flex-col items-center">
+<i class="fas fa-layer-group text-3xl text-gray-300 mb-2"></i>
+<div class="text-xs font-bold text-gray-500">Belum ada akun</div>
+</div>
+</div>
+</div>
+
+<div class="terminal-box">
+<div class="flex justify-between mb-2 border-b border-gray-700 pb-1 opacity-70">
+<span>>_ bulk_terminal.log</span>
+<span><i class="fas fa-copy"></i> Salin</span>
+</div>
+<div id="terminalBulk">
+<div class="font-bold">[SYSTEM]</div>
+<div>Bulk Generator siap digunakan. Maks 5 akun per proses.</div>
+<div class="font-bold">[READY]</div>
+</div>
+</div>
+</div>
+
+<!-- TAB DOCS -->
+<div id="tab-docs" class="tab-content space-y-4">
+<div class="text-center pt-2">
+<span class="bg-yellow-300 border-2 border-black px-4 py-1.5 text-[10px] font-bold rounded-lg shadow-[2px_2px_0px_#000] inline-flex items-center gap-1.5 mb-3">
+<i class="fas fa-book"></i> DOKUMENTASI
+</span>
+<h2 class="text-3xl font-extrabold">Panduan & FAQ</h2>
+</div>
+<div class="card-neo p-5 space-y-3">
+<div class="text-sm font-bold border-b-2 border-gray-200 pb-2">Apa itu PadilSync?</div>
+<p class="text-xs text-gray-500">Tools otomatisasi aktivasi Alight Motion Premium.</p>
+</div>
+</div>
+
+<!-- TAB COMMUNITY -->
+<div id="tab-community" class="tab-content space-y-4">
+<div class="text-center pt-2">
+<span class="bg-yellow-300 border-2 border-black px-4 py-1.5 text-[10px] font-bold rounded-lg shadow-[2px_2px_0px_#000] inline-flex items-center gap-1.5 mb-3">
+<i class="fas fa-users"></i> KOMUNITAS
+</span>
+<h2 class="text-3xl font-extrabold">Gabung Komunitas</h2>
+<p class="text-xs text-gray-600 mt-2">Update terbaru & diskusi bareng.</p>
+</div>
+
+<div class="space-y-2">
+<!-- SALURAN WHATSAPP -->
+<a href="https://whatsapp.com/channel/0029Vb9o4dkBFLga6aVcXY25" target="_blank" class="card-neo p-4 flex items-center gap-3" style="text-decoration:none">
+<div class="icon-badge bg-green-500 text-white border-none"><i class="fab fa-whatsapp"></i></div>
+<div class="flex-1">
+<div class="text-xs font-bold">Saluran WhatsApp PadilSync</div>
+<div class="text-[10px] text-gray-500">Ikuti untuk update terbaru</div>
+</div>
+<i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+</a>
+
+<!-- CONTACT OWNER -->
+<a href="https://wa.me/6283182365070" target="_blank" class="card-neo p-4 flex items-center gap-3" style="text-decoration:none">
+<div class="icon-badge bg-green-600 text-white border-none"><i class="fas fa-headset"></i></div>
+<div class="flex-1">
+<div class="text-xs font-bold">Contact Owner</div>
+<div class="text-[10px] text-gray-500">Chat langsung ke owner</div>
+</div>
+<i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+</a>
+
+<!-- GROUP WHATSAPP -->
+<a href="https://wa.me/6283182365070" target="_blank" class="card-neo p-4 flex items-center gap-3" style="text-decoration:none">
+<div class="icon-badge bg-green-500 text-white border-none"><i class="fas fa-users"></i></div>
+<div class="flex-1">
+<div class="text-xs font-bold">Grup WhatsApp</div>
+<div class="text-[10px] text-gray-500">Diskusi & tanya jawab</div>
+</div>
+<i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+</a>
+
+<!-- TELEGRAM -->
+<a href="https://wa.me/6283182365070" target="_blank" class="card-neo p-4 flex items-center gap-3" style="text-decoration:none">
+<div class="icon-badge bg-blue-500 text-white border-none"><i class="fab fa-telegram"></i></div>
+<div class="flex-1">
+<div class="text-xs font-bold">Telegram Owner</div>
+<div class="text-[10px] text-gray-500">Hubungi owner via Telegram</div>
+</div>
+<i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+</a>
+</div>
+</div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+<div class="max-w-md mx-auto grid grid-cols-4 gap-1 px-4">
+<button class="nav-btn active" data-tab="activation"><i class="fas fa-bolt"></i><span>Activation</span></button>
+<button class="nav-btn" data-tab="bulk"><i class="fas fa-layer-group"></i><span>Bulk</span></button>
+<button class="nav-btn" data-tab="docs"><i class="fas fa-file-alt"></i><span>Docs</span></button>
+<button class="nav-btn" data-tab="community"><i class="fas fa-users"></i><span>Community</span></button>
+</div>
+</nav>
+
+<script src="app.js"></script>
+</body>
+</html>
