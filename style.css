@@ -1,356 +1,306 @@
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;width:100%;max-width:100vw;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* =====================================================
+   PADILSYNC — STYLE.CSS
+   Mode Terang: Neo-Brutalism
+   Mode Gelap: Neumorphism
+   ===================================================== */
 
-body{
-    font-family:'Inter',sans-serif;
-    background-color:#f5f5f0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ============ VARIABLES ============ */
+:root {
+    /* MODE TERANG (default) */
+    --bg: #f5f5f0;
+    --bg-grid: rgba(200,200,190,0.3);
+    --card-bg: #ffffff;
+    --card-border: 2px solid #0f172a;
+    --card-shadow: 4px 4px 0px #0f172a;
+    --card-shadow-sm: 3px 3px 0px #0f172a;
+    --text: #0f172a;
+    --text-sub: #475569;
+    --text-muted: #94a3b8;
+    --accent: #a3e635;
+    --accent-2: #fde047;
+    --accent-blue: #3b82f6;
+    --border-color: #0f172a;
+    --btn-shadow: 3px 3px 0px #0f172a;
+    --input-bg: #ffffff;
+    --input-border: 2px solid #0f172a;
+    --terminal-bg: #0f172a;
+    --terminal-text: #a3e635;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --font: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+body.dark {
+    /* MODE GELAP (Neumorphism) */
+    --bg: #1a1d23;
+    --bg-grid: rgba(40,45,58,0.3);
+    --card-bg: #1a1d23;
+    --card-border: none;
+    --card-shadow: 6px 6px 14px rgba(0,0,0,0.55), -6px -6px 14px rgba(40,45,58,0.8);
+    --card-shadow-sm: 4px 4px 8px rgba(0,0,0,0.5), -4px -4px 8px rgba(40,45,58,0.7);
+    --text: #e8eaf0;
+    --text-sub: #9da8c0;
+    --text-muted: #636b82;
+    --accent: #5b7cfa;
+    --accent-2: #4a67e8;
+    --accent-blue: #5b7cfa;
+    --border-color: transparent;
+    --btn-shadow: 4px 4px 10px rgba(0,0,0,0.5), -3px -3px 8px rgba(40,45,58,0.7);
+    --input-bg: #1a1d23;
+    --input-border: none;
+    --terminal-bg: #0f1218;
+    --terminal-text: #60a5fa;
+}
+
+/* ============ BASE ============ */
+html, body {
+    min-height: 100%;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: var(--bg);
     background-image:
-        linear-gradient(rgba(200,200,190,0.3) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,200,190,0.3) 1px, transparent 1px);
-    background-size:24px 24px;
-    color:#0f172a;
-    padding-bottom:90px;
+        linear-gradient(var(--bg-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    transition: background-color .3s, color .3s;
 }
 
-/* Card Neo-Brutalism (gaya DapjiSync) */
-.card-neo{
-    background:#ffffff;
-    border:2px solid #0f172a;
-    border-radius:16px;
-    box-shadow:3px 3px 0px #0f172a;
-    transition:all 0.2s ease;
+body {
+    padding-bottom: 90px;
+    overscroll-behavior-x: none;
 }
 
-/* Tombol Neo */
-.btn-neo{
-    border:2px solid #0f172a;
-    border-radius:12px;
-    box-shadow:3px 3px 0px #0f172a;
-    transition:all 0.1s ease;
-    font-weight:800;
-    display:flex;align-items:center;justify-content:center;
-    gap:8px;cursor:pointer;width:100%;padding:12px 0;
-    font-family:'Inter',sans-serif;
-}
-.btn-neo:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0px #0f172a}
-.btn-neo:disabled{opacity:0.5;cursor:not-allowed}
-
-.btn-black{background:#0f172a;color:#fff}
-.btn-green{background:#a3e635;color:#0f172a}
-.btn-outline{background:#fff;color:#0f172a}
-.btn-yellow{background:#fde047;color:#0f172a}
-
-/* Terminal Box */
-.terminal-box{
-    background:#0f172a;
-    color:#a3e635;
-    font-family:'Courier New',monospace;
-    padding:16px;border-radius:14px;font-size:12px;
-    line-height:1.7;border:2px solid #0f172a;
-    box-shadow:3px 3px 0px #0f172a;
-    word-break:break-all;
+::-webkit-scrollbar { width: 6px; height: 0; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 10px;
+    opacity: 0.5;
 }
 
-/* Icon Badge */
-.icon-badge{
-    width:38px;height:38px;
-    display:flex;align-items:center;justify-content:center;
-    border-radius:10px;border:2px solid #0f172a;
-    font-size:16px;flex-shrink:0;
+/* ============ CARD ============ */
+.card-neo {
+    background: var(--card-bg);
+    border: var(--card-border);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    transition: all .3s;
 }
 
-/* Input */
-input[type="email"],input[type="url"],input[type="number"]{
-    border:2px solid #0f172a;border-radius:12px;
-    padding:12px 14px;font-size:14px;width:100%;
-    outline:none;transition:all 0.2s;
-    background:#fff;color:#0f172a;
-    font-family:'Inter',sans-serif;
-}
-input:focus{box-shadow:0 0 0 4px rgba(163,230,53,0.4)}
-
-/* Counter animation */
-.counter-pop{animation:pop 0.4s ease}
-@keyframes pop{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.15);color:#16a34a}
-    100%{transform:scale(1)}
-}
-
-/* 🔥 BOTTOM NAV GLASS EFFECT (iOS Style) 🔥 */
-.bottom-nav{
-    position:fixed;
-    bottom:12px;
-    left:50%;
-    transform:translateX(-50%);
-    width:calc(100% - 24px);
-    max-width:420px;
-    background:rgba(255, 255, 255, 0.55);
-    backdrop-filter:blur(20px) saturate(180%);
-    -webkit-backdrop-filter:blur(20px) saturate(180%);
-    border:1.5px solid rgba(255, 255, 255, 0.6);
-    border-radius:24px;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.12),
-        0 2px 8px rgba(0, 0, 0, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    z-index:50;
-    padding:6px 4px;
-    transition:all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.tab-content{display:none}
-.tab-content.active{display:block}
-
-.nav-btn{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:8px 0;
-    color:#6b7280;
-    transition:all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    background:transparent;
-    border:none;
-    cursor:pointer;
-    width:100%;
-    border-radius:16px;
-    position:relative;
-}
-
-.nav-btn.active{
-    color:#0f172a;
-    background:rgba(255, 255, 255, 0.6);
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.nav-btn i{
-    font-size:18px;
-    margin-bottom:3px;
-    transition:transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.nav-btn.active i{
-    transform:scale(1.1);
-}
-
-.nav-btn span{
-    font-size:9px;
-    font-weight:700;
-    letter-spacing:0.2px;
-}
-
-/* Qty Button (+/-) */
-.qty-btn{
-    width:56px;height:52px;font-size:24px;font-weight:800;
-    cursor:pointer;transition:background 0.15s;
-    display:flex;align-items:center;justify-content:center;
-    border:none;user-select:none;background:#f1f5f9;color:#0f172a;
-    touch-action:manipulation;
-}
-.qty-btn:active:not(:disabled){background:#cbd5e1}
-.qty-btn:disabled{opacity:0.3;cursor:not-allowed}
-
-/* Loader */
-.loader-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0}
-.spinner{
-    width:40px;height:40px;
-    border:4px solid #e2e8f0;border-top:4px solid #a3e635;
-    border-radius:50%;animation:spin 1s linear infinite;margin-bottom:12px;
-}
-@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-
-/* 🔥 ANIMASI SMOOTH iOS 🔥 */
-@keyframes slideUpSmooth {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.slide-up {
-    animation: slideUpSmooth 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    opacity: 0;
-}
-
-/* Stagger delays — biar muncul berurutan */
-.slide-up-1 { animation-delay: 0.10s; }
-.slide-up-2 { animation-delay: 0.20s; }
-.slide-up-3 { animation-delay: 0.30s; }
-.slide-up-4 { animation-delay: 0.40s; }
-.slide-up-5 { animation-delay: 0.50s; }
-.slide-up-6 { animation-delay: 0.60s; }
-.slide-up-7 { animation-delay: 0.70s; }
-.slide-up-8 { animation-delay: 0.80s; }
-/* 🔥 MARQUEE — Teks berjalan dari kanan ke kiri 🔥 */
-.marquee-container {
-    position: relative;
+/* ============ BUTTON ============ */
+.btn-neo {
+    border: var(--card-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--btn-shadow);
+    transition: all .2s cubic-bezier(.22,.68,0,1.2);
+    font-weight: 700;
+    font-family: var(--font);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
     width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+    padding: 12px 0;
+    color: var(--text);
+    background: var(--card-bg);
+    font-size: 13px;
+}
+.btn-neo:hover:not(:disabled) { transform: translateY(-1px); }
+.btn-neo:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--border-color);
+}
+.btn-neo:disabled { opacity: 0.5; cursor: not-allowed; }
+
+body:not(.dark) .btn-black { background: #0f172a; color: #fff; }
+body:not(.dark) .btn-green { background: #a3e635; color: #0f172a; }
+body:not(.dark) .btn-outline { background: #fff; color: #0f172a; }
+
+body.dark .btn-black { background: #5b7cfa; color: #fff; border: none; }
+body.dark .btn-green { background: #5b7cfa; color: #fff; border: none; }
+body.dark .btn-outline { background: var(--card-bg); color: var(--text); border: none; }
+body.dark .btn-outline:hover:not(:disabled) { color: var(--accent); }
+
+/* ============ TERMINAL ============ */
+.terminal-box {
+    background: var(--terminal-bg);
+    color: var(--terminal-text);
+    font-family: var(--font-mono);
+    padding: 16px;
+    border-radius: var(--radius);
+    font-size: 12px;
+    line-height: 1.7;
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    word-break: break-all;
+    transition: all .3s;
 }
 
-.marquee-text {
-    display: inline-block;
-    white-space: nowrap;
-    animation: marqueeScroll 25s linear infinite;
-    padding-left: 100%;
+/* ============ ICON BADGE ============ */
+.icon-badge {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+    border: var(--card-border);
+    font-size: 16px;
+    flex-shrink: 0;
+    background: var(--card-bg);
+    transition: all .3s;
 }
 
-@keyframes marqueeScroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+/* ============ INPUT ============ */
+input[type="email"], input[type="url"], input[type="number"] {
+    border: var(--input-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    background: var(--input-bg);
+    color: var(--text);
+    font-family: var(--font);
+    transition: all .2s;
+    box-shadow: var(--card-shadow-sm);
 }
-nav, main, .bottom-nav {
-    position: relative;
-    z-index: 1;
-}
-/* ============================================ */
-/* 🔥 BACKGROUND LUAR ANGKASA ANIMASI 🔥 */
-/* ============================================ */
+body.dark input { box-shadow: inset 4px 4px 8px rgba(0,0,0,0.5), inset -4px -4px 8px rgba(40,45,58,0.7); }
+body.dark input:focus { box-shadow: inset 5px 5px 12px rgba(0,0,0,0.55), inset -5px -5px 12px rgba(40,45,58,0.8); }
+input:focus { outline: none; }
+body:not(.dark) input:focus { box-shadow: 0 0 0 4px rgba(163,230,53,0.4); }
+input::placeholder { color: var(--text-muted); }
 
-/* Container untuk elemen luar angkasa */
-#space-bg {
+/* ============ COUNTER POP ============ */
+.counter-pop { animation: pop 0.4s ease; }
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); color: var(--accent); }
+    100% { transform: scale(1); }
+}
+
+/* ============ BOTTOM NAV ============ */
+.bottom-nav {
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 0; left: 0; right: 0;
     width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+    z-index: 50;
+    padding: 8px 0;
+    border-top: var(--card-border);
+    background: var(--card-bg);
+    transition: all .3s;
+}
+body.dark .bottom-nav { box-shadow: 0 -4px 14px rgba(0,0,0,0.4); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.nav-btn {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 6px 0;
+    color: var(--text-muted);
+    background: none; border: none; cursor: pointer;
+    width: 100%;
+    transition: color .2s, transform .2s;
+    font-family: var(--font);
+}
+.nav-btn.active { color: var(--accent); }
+.nav-btn:hover { color: var(--text); }
+.nav-btn i { font-size: 18px; margin-bottom: 2px; }
+.nav-btn span { font-size: 9px; font-weight: 700; }
+
+/* ============ QTY BUTTON (+/-) ============ */
+.qty-btn {
+    width: 56px; height: 52px;
+    font-size: 24px; font-weight: 800;
+    cursor: pointer;
+    transition: all .15s;
+    display: flex; align-items: center; justify-content: center;
+    border: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    background: var(--card-bg);
+    color: var(--text);
+    font-family: var(--font);
+}
+.qty-btn:hover { color: var(--accent); }
+.qty-btn:active:not(:disabled) { transform: scale(0.95); }
+.qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ============ LOADER ============ */
+.loader-box {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 20px 0;
+}
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid var(--bg-grid);
+    border-top: 4px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+}
+@keyframes spin { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
+
+/* ============ THEME TOGGLE ============ */
+.theme-toggle {
+    width: 38px; height: 38px;
+    border: var(--card-border);
+    border-radius: var(--radius-sm);
+    background: var(--card-bg);
+    color: var(--text);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: all .2s cubic-bezier(.22,.68,0,1.2);
+    box-shadow: var(--btn-shadow);
+}
+.theme-toggle:hover { color: var(--accent); transform: translateY(-1px); }
+.theme-toggle:active { transform: translate(2px, 2px); }
+
+/* ============ ANIMASI ============ */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(.94); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Setiap elemen luar angkasa */
-.space-item {
-    position: absolute;
-    font-size: 28px;
-    opacity: 0.85;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-}
+.fade-up { animation: fadeUp .45s cubic-bezier(.22,.68,0,1.2) both; }
+.fade-up-1 { animation-delay: .05s; }
+.fade-up-2 { animation-delay: .12s; }
+.fade-up-3 { animation-delay: .19s; }
+.fade-up-4 { animation-delay: .26s; }
+.scale-in { animation: scaleIn .4s cubic-bezier(.22,.68,0,1.2) both; }
+.slide-down { animation: slideDown .45s cubic-bezier(.22,.68,0,1.2) both; }
 
-/* 🚀 Roket — gerak dari kiri ke kanan */
-.rocket-1 {
-    top: 10%;
-    left: -10%;
-    animation: fly-right 22s linear infinite;
-}
-.rocket-2 {
-    top: 45%;
-    left: -10%;
-    font-size: 22px;
-    animation: fly-right 28s linear infinite;
-    animation-delay: 5s;
-}
-.rocket-3 {
-    bottom: 20%;
-    right: -10%;
-    animation: fly-left 25s linear infinite;
-    animation-delay: 3s;
-}
+.tab-content.active { animation: fadeUp .35s cubic-bezier(.22,.68,0,1.2) both; }
 
-/* 🛸 UFO — gerak bolak-balik */
-.ufo-1 {
-    top: 30%;
-    left: 10%;
-    font-size: 26px;
-    animation: float-ufo 12s ease-in-out infinite;
-}
-.ufo-2 {
-    bottom: 35%;
-    right: 15%;
-    font-size: 20px;
-    animation: float-ufo 15s ease-in-out infinite;
-    animation-delay: 2s;
-}
-
-/* ⭐ Bintang — kedip-kedip */
-.star-1 { top: 5%; left: 15%; font-size: 16px; animation: twinkle 3s ease-in-out infinite; }
-.star-2 { top: 12%; right: 10%; font-size: 20px; animation: twinkle 4s ease-in-out infinite; animation-delay: 1s; }
-.star-3 { top: 55%; left: 5%; font-size: 18px; animation: twinkle 3.5s ease-in-out infinite; animation-delay: 0.5s; }
-.star-4 { bottom: 15%; right: 20%; font-size: 22px; animation: twinkle 4.5s ease-in-out infinite; animation-delay: 2s; }
-.star-5 { bottom: 40%; left: 25%; font-size: 14px; animation: twinkle 2.8s ease-in-out infinite; }
-
-/* 🪐 Planet — muter pelan */
-.planet-1 {
-    top: 70%;
-    right: 8%;
-    font-size: 24px;
-    animation: rotate-slow 30s linear infinite;
-}
-.planet-2 {
-    top: 25%;
-    left: 8%;
-    font-size: 18px;
-    animation: rotate-slow 25s linear infinite;
-    animation-delay: 5s;
-}
-
-/* ☄️ Komet — melintas diagonal */
-.comet-1 {
-    top: 15%;
-    right: -10%;
-    font-size: 22px;
-    animation: shoot-comet 18s linear infinite;
-}
-.comet-2 {
-    top: 65%;
-    right: -10%;
-    font-size: 18px;
-    animation: shoot-comet 24s linear infinite;
-    animation-delay: 8s;
-}
-
-/* ============================================ */
-/* 🎬 ANIMATIONS */
-/* ============================================ */
-
-@keyframes fly-right {
-    0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateX(110vw) translateY(-50px) rotate(45deg); opacity: 0; }
-}
-
-@keyframes fly-left {
-    0% { transform: translateX(0) translateY(0) rotate(-135deg); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateX(-110vw) translateY(-30px) rotate(-135deg); opacity: 0; }
-}
-
-@keyframes float-ufo {
-    0%, 100% { transform: translateY(0) translateX(0) rotate(-10deg); }
-    25% { transform: translateY(-20px) translateX(15px) rotate(10deg); }
-    50% { transform: translateY(0) translateX(30px) rotate(-10deg); }
-    75% { transform: translateY(-15px) translateX(15px) rotate(10deg); }
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.3); }
-}
-
-@keyframes rotate-slow {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(180deg) scale(1.1); }
-    100% { transform: rotate(360deg) scale(1); }
-}
-
-@keyframes shoot-comet {
-    0% { transform: translateX(0) translateY(0) rotate(-30deg); opacity: 0; }
-    5% { opacity: 1; }
-    95% { opacity: 1; }
-    100% { transform: translateX(-120vw) translateY(40vh) rotate(-30deg); opacity: 0; }
-}
+/* ============ RESPONSIVE ============ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+    }
