@@ -77,26 +77,70 @@ input:focus{box-shadow:0 0 0 4px rgba(163,230,53,0.4)}
     100%{transform:scale(1)}
 }
 
-/* Bottom Nav */
+/* 🔥 BOTTOM NAV GLASS EFFECT (iOS Style) 🔥 */
 .bottom-nav{
-    position:fixed;bottom:0;left:0;right:0;
-    width:100%;background:#fff;border-top:2px solid #0f172a;
-    z-index:50;padding:8px 0;
+    position:fixed;
+    bottom:12px;
+    left:50%;
+    transform:translateX(-50%);
+    width:calc(100% - 24px);
+    max-width:420px;
+    background:rgba(255, 255, 255, 0.55);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border:1.5px solid rgba(255, 255, 255, 0.6);
+    border-radius:24px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        0 2px 8px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    z-index:50;
+    padding:6px 4px;
+    transition:all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .tab-content{display:none}
 .tab-content.active{display:block}
 
 .nav-btn{
-    display:flex;flex-direction:column;
-    align-items:center;justify-content:center;
-    padding:6px 0;color:#9ca3af;
-    transition:color 0.2s;background:none;
-    border:none;cursor:pointer;width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:8px 0;
+    color:#6b7280;
+    transition:all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    width:100%;
+    border-radius:16px;
+    position:relative;
 }
-.nav-btn.active{color:#0f172a}
-.nav-btn i{font-size:18px;margin-bottom:2px}
-.nav-btn span{font-size:9px;font-weight:700}
+
+.nav-btn.active{
+    color:#0f172a;
+    background:rgba(255, 255, 255, 0.6);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.nav-btn i{
+    font-size:18px;
+    margin-bottom:3px;
+    transition:transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-btn.active i{
+    transform:scale(1.1);
+}
+
+.nav-btn span{
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:0.2px;
+}
 
 /* Qty Button (+/-) */
 .qty-btn{
