@@ -442,5 +442,69 @@ if (btnGenerate) {
         } catch(err) { console.error('Generate error:', err); }
     });
 }
+  // ============ TOOLS: CARI PRESET AM ============
+function extractAlightLinks(obj, results) {
+    results = results || [];
+    if (!obj) return results;
+    
+    if (typeof obj === 'string') {
+        var regex = /https?:\/\/(?:www\.)?(?:alightcreative\.com\/(?:share|am\/share)\/u\/|alight\.link\/|alightmotion\.com\/)[^\s"'<>\\]+/gi;
+        var matches = obj.match(regex) || [];
+        matches.forEach(function(m) { if (results.indexOf(m) === -1) results.push(m); });
+        return results;
+    }
+    
+    if (Array.isArray(obj)) {
+        obj.forEach(function(item) { extractAlightLinks(item, results); });
+        return results;
+    }
+    
+    if (typeof obj === 'object') {
+        Object.values(obj).forEach(function(value) { extractAlightLinks(value, results); });
+    }
+    
+    return results;
+}
+
+var btnCariPreset = document.getElementById('btnCariPreset');
+if (btnCariPreset) {
+    btnCariPreset.addEventListener('click', async function(){
+        var url = document.getElementById('tiktokInput').value.trim();
+        var hasil = document.getElementById('hasilPreset');
+        var btn = document.getElementById('btnCariPreset');
+        
+        if (!url) { alert('Masukkan link TikTok!'); return; }
+        if (!/tiktok\.com/i.test(url)) { alert('Link harus dari TikTok!'); return; }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
+        hasil.innerHTML = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin" style="font-size:24px;color:var(--accent);"></i><div style="font-size:11px;color:var(--text-sub);margin-top:8px;font-family:var(--font);">Mencari preset... (10-30 detik)</div></div>';
+        
+        try {
+            var response = await fetch('/api/ampreset?url=' + encodeURIComponent(url));
+            var data = await response.json();
+            var alightLinks = extractAlightLinks(data);
+            
+            if (!alightLinks.length) {
+                hasil.innerHTML = '<div style="padding:12px;background:rgba(239,68,68,0.1);border-radius:8px;font-size:11px;color:#ef4444;font-family:var(--font);">⚠️ Preset tidak ditemukan. Coba link TikTok lain.</div>';
+            } else {
+                var html = '<div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;font-family:var(--font);">✅ Ditemukan ' + alightLinks.length + ' preset:</div>';
+                alightLinks.slice(0, 10).forEach(function(link, i){
+                    html += '<div style="padding:10px;margin-bottom:8px;background:var(--bg);border-radius:8px;font-size:11px;font-family:var(--font-mono);word-break:break-all;">' +
+                        '<div style="font-weight:700;color:var(--accent);margin-bottom:4px;">Preset ' + (i+1) + '</div>' +
+                        '<div style="color:var(--text);">' + link + '</div>' +
+                        '<button onclick="navigator.clipboard.writeText(\'' + link + '\'); alert(\'Link disalin!\');" style="margin-top:6px;padding:4px 10px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;cursor:pointer;">Salin</button>' +
+                        '</div>';
+                });
+                hasil.innerHTML = html;
+            }
+        } catch (e) {
+            hasil.innerHTML = '<div style="padding:12px;background:rgba(239,68,68,0.1);border-radius:8px;font-size:11px;color:#ef4444;font-family:var(--font);">❌ Gagal: ' + e.message + '</div>';
+        }
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-search"></i> Cari Preset';
+    });
+}
     console.log('✅ PadilSync siap!');
 });
