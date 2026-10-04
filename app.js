@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var btnKembali = document.getElementById('btnKembali');
     if (btnKembali) btnKembali.addEventListener('click', function(){ switchTab('activation'); });
 
+    var btnKembaliKeAktivasi = document.getElementById('btnKembaliKeAktivasi');
+if (btnKembaliKeAktivasi) btnKembaliKeAktivasi.addEventListener('click', function(){ switchTab('activation'); });
     async function callAPI(endpoint, payload) {
         var response = await fetch('/api' + endpoint, {
             method: 'POST',
