@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>PadilSync</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 
 <script type="module">
@@ -38,158 +39,153 @@ try {
 <body>
 
 <!-- ANIMASI LUAR ANGKASA -->
-<div id="space-bg">
+<div id="space-bg" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;">
     <div class="space-item rocket-1">🚀</div>
     <div class="space-item rocket-2">🚀</div>
-    <div class="space-item rocket-3">🛸</div>
     <div class="space-item ufo-1">🛸</div>
     <div class="space-item ufo-2">🛸</div>
     <div class="space-item star-1">⭐</div>
     <div class="space-item star-2">✨</div>
     <div class="space-item star-3">⭐</div>
     <div class="space-item star-4">✨</div>
-    <div class="space-item star-5">⭐</div>
     <div class="space-item planet-1">🪐</div>
-    <div class="space-item planet-2">🪐</div>
     <div class="space-item comet-1">☄️</div>
-    <div class="space-item comet-2">☄️</div>
 </div>
 
 <!-- NAVBAR -->
-<nav id="navbar" style="background:#fff;border-bottom:2px solid #0f172a;padding:12px;position:sticky;top:0;z-index:50;">
+<nav style="background:var(--card-bg);border-bottom:var(--card-border);padding:12px;position:sticky;top:0;z-index:50;transition:all .3s;" class="fade-up">
 <div style="max-width:448px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;">
 <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-<div style="width:38px;height:38px;min-width:38px;border-radius:10px;background:linear-gradient(135deg,#0f172a,#1e293b);border:2px solid #0f172a;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
-<span style="color:#94a3b8;font-weight:900;font-size:15px;font-family:Arial,sans-serif;line-height:1;">AM</span>
+<div style="width:38px;height:38px;min-width:38px;border-radius:10px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;font-family:var(--font);">
+AM
 </div>
 <div>
-<h1 style="font-weight:900;font-size:14px;line-height:1.2;margin:0;color:#0f172a;">PadilSync</h1>
-<span style="font-size:9px;background:#fde047;padding:1px 6px;border-radius:4px;border:1.5px solid #0f172a;font-weight:700;color:#0f172a;">AM PREM</span>
+<h1 style="font-weight:900;font-size:14px;line-height:1.2;margin:0;color:var(--text);font-family:var(--font);">PadilSync</h1>
+<span style="font-size:9px;background:var(--accent-2);color:#0f172a;padding:2px 6px;border-radius:4px;font-weight:700;font-family:var(--font);display:inline-block;margin-top:2px;">AM PREM</span>
 </div>
 </div>
-<div style="display:flex;gap:8px;align-items:center;">
-<button onclick="toggleTheme()" id="themeBtn" style="width:38px;height:38px;min-width:38px;border-radius:10px;background:#0f172a;color:#fff;border:2px solid #0f172a;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;">
-<i class="fas fa-moon"></i>
+<button onclick="toggleTheme()" id="themeBtn" class="theme-toggle" aria-label="Toggle tema">
+<i class="fas fa-sun" id="iconLight" style="display:none;"></i>
+<i class="fas fa-moon" id="iconDark"></i>
 </button>
-</div>
 </div>
 </nav>
 
-<main style="max-width:448px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:16px;position:relative;z-index:1;">
+<main style="max-width:448px;margin:0 auto;padding:16px;position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;">
 
 <!-- BANNER CONTACT OWNER -->
-<a href="https://wa.me/6283182365070" target="_blank" style="background:linear-gradient(135deg,#25D366,#128C7E);text-decoration:none;display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;border:2px solid #0f172a;box-shadow:3px 3px 0px #0f172a;margin-top:5px;">
-<div style="width:40px;height:40px;min-width:40px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #0f172a;flex-shrink:0;">
+<a href="https://wa.me/6283182365070" target="_blank" class="fade-up fade-up-1" style="background:linear-gradient(135deg,#25D366,#128C7E);text-decoration:none;display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius);border:var(--card-border);box-shadow:var(--card-shadow);">
+<div style="width:40px;height:40px;min-width:40px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #0f172a;flex-shrink:0;">
 <i class="fab fa-whatsapp" style="color:#25D366;font-size:18px;"></i>
 </div>
 <div style="flex:1;">
-<div style="font-size:12px;font-weight:700;color:white;">Ada masalah? Contact Owner</div>
-<div style="font-size:10px;color:rgba(255,255,255,0.8);">Klik untuk chat via WhatsApp</div>
+<div style="font-size:12px;font-weight:700;color:#fff;font-family:var(--font);">Ada masalah? Contact Owner</div>
+<div style="font-size:10px;color:rgba(255,255,255,0.85);font-family:var(--font);">Klik untuk chat via WhatsApp</div>
 </div>
-<i class="fas fa-chevron-right" style="color:white;font-size:14px;"></i>
+<i class="fas fa-chevron-right" style="color:#fff;font-size:14px;"></i>
 </a>
 
 <!-- STATUS BAR -->
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:10px;font-weight:700;">
-<div style="background:#fff;border:2px solid #0f172a;border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0px #0f172a;">
-<i class="fas fa-calendar-alt" style="color:#64748b;font-size:14px;"></i>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:10px;font-weight:700;" class="fade-up fade-up-2">
+<div class="card-neo" style="padding:10px;display:flex;align-items:center;gap:8px;">
+<i class="fas fa-calendar-alt" style="color:var(--text-sub);font-size:14px;"></i>
 <div>
-<div style="color:#64748b;font-size:8px;text-transform:uppercase;">Tanggal</div>
-<div id="date" style="font-size:11px;">-</div>
+<div style="color:var(--text-sub);font-size:8px;text-transform:uppercase;font-family:var(--font-mono);">Tanggal</div>
+<div id="date" style="font-size:11px;color:var(--text);">-</div>
 </div>
 </div>
-<div style="background:#fde047;border:2px solid #0f172a;border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0px #0f172a;">
+<div class="card-neo" style="padding:10px;display:flex;align-items:center;gap:8px;background:var(--accent-2);">
 <i class="fas fa-clock" style="color:#0f172a;font-size:14px;"></i>
 <div>
-<div style="color:#78350f;font-size:8px;text-transform:uppercase;">Waktu WIB</div>
-<div id="clock" style="font-size:11px;">--:--:--</div>
+<div style="color:#78350f;font-size:8px;text-transform:uppercase;font-family:var(--font-mono);">Waktu WIB</div>
+<div id="clock" style="font-size:11px;color:#0f172a;">--:--:--</div>
 </div>
 </div>
-<div style="background:#a3e635;border:2px solid #0f172a;border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0px #0f172a;">
+<div class="card-neo" style="padding:10px;display:flex;align-items:center;gap:8px;background:var(--accent);">
 <i class="fas fa-battery-three-quarters" style="color:#0f172a;font-size:14px;"></i>
 <div>
-<div style="color:#14532d;font-size:8px;text-transform:uppercase;">Baterai</div>
-<div id="battery" style="font-size:11px;">--%</div>
+<div style="color:#14532d;font-size:8px;text-transform:uppercase;font-family:var(--font-mono);">Baterai</div>
+<div id="battery" style="font-size:11px;color:#0f172a;">--%</div>
 </div>
 </div>
 </div>
 
 <!-- INFO -->
-<div style="background:#fde047;border:2px solid #0f172a;border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;box-shadow:3px 3px 0px #0f172a;">
-<i class="fas fa-info-circle" style="font-size:14px;"></i>
-<span style="color:#0f172a;">Web ini TIDAK DIPERJUALBELIKAN • Jika ada yang menjual, WAJIB LAPOR ke owner</span>
+<div class="card-neo fade-up fade-up-3" style="padding:10px;display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;background:var(--accent-2);">
+<i class="fas fa-info-circle" style="font-size:14px;color:#0f172a;"></i>
+<span style="color:#0f172a;font-family:var(--font);">Web ini TIDAK DIPERJUALBELIKAN • Jika ada yang menjual, WAJIB LAPOR ke owner</span>
 </div>
 
 <!-- TAB ACTIVATION -->
 <div id="tab-activation" class="tab-content active">
-<div style="text-align:center;padding-top:8px;">
-<span style="background:#fde047;border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;">
+<div style="text-align:center;padding-top:8px;" class="fade-up fade-up-4">
+<span style="background:var(--accent-2);border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;font-family:var(--font-mono);color:#0f172a;">
 <i class="fas fa-crown"></i> ACTIVATION MANUAL
 </span>
-<h2 style="font-size:28px;font-weight:900;line-height:1.1;margin:0;color:#0f172a;">Kirim Link &<br>Verifikasi Link</h2>
-<p style="font-size:11px;color:#475569;margin-top:8px;padding:0 16px;">Kirim magic link ke Gmail lalu verifikasi untuk aktivasi Alight Motion Premium 1 tahun — otomatis, tanpa kata sandi.</p>
+<h2 style="font-size:28px;font-weight:900;line-height:1.1;margin:0;color:var(--text);font-family:var(--font);">Kirim Link &<br>Verifikasi Link</h2>
+<p style="font-size:11px;color:var(--text-sub);margin-top:8px;padding:0 16px;font-family:var(--font);">Kirim magic link ke Gmail lalu verifikasi untuk aktivasi Alight Motion Premium 1 tahun.</p>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-<div style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:14px;box-shadow:3px 3px 0px #0f172a;">
-<div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
-<i class="fas fa-globe-asia" style="color:#3b82f6;"></i> Global
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;" class="fade-up">
+<div class="card-neo" style="padding:14px;">
+<div style="font-size:10px;color:var(--text-sub);font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:6px;font-family:var(--font-mono);">
+<i class="fas fa-globe-asia" style="color:var(--accent-blue);"></i> Global
 </div>
 <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px;">
-<span id="total-global" style="font-size:28px;font-weight:900;">0</span>
-<i class="fas fa-trophy" style="color:#cbd5e1;font-size:18px;"></i>
+<span id="total-global" style="font-size:28px;font-weight:900;color:var(--text);font-family:var(--font);">0</span>
+<i class="fas fa-trophy" style="color:var(--text-muted);font-size:18px;"></i>
 </div>
 </div>
-<div style="background:#fde047;border:2px solid #0f172a;border-radius:14px;padding:14px;box-shadow:3px 3px 0px #0f172a;">
-<div style="font-size:10px;color:#78350f;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+<div class="card-neo" style="padding:14px;background:var(--accent-2);">
+<div style="font-size:10px;color:#78350f;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:6px;font-family:var(--font-mono);">
 <i class="fas fa-calendar-day"></i> Hari Ini
 </div>
 <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px;">
-<span id="total-hari-ini" style="font-size:28px;font-weight:900;">0</span>
+<span id="total-hari-ini" style="font-size:28px;font-weight:900;color:#0f172a;font-family:var(--font);">0</span>
 <i class="fas fa-clock" style="color:#78350f;font-size:18px;"></i>
 </div>
 </div>
 </div>
 
-<div id="userCard" style="background:linear-gradient(135deg,#a3e635,#22d3ee);border:2px solid #0f172a;border-radius:14px;padding:14px;box-shadow:3px 3px 0px #0f172a;margin-top:12px;">
+<div id="userCard" class="card-neo fade-up" style="background:linear-gradient(135deg,#a3e635,#22d3ee);margin-top:12px;padding:14px;">
 <div style="display:flex;align-items:center;justify-content:space-between;">
 <div style="display:flex;align-items:center;gap:12px;">
 <div style="width:44px;height:44px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #0f172a;">
 <i class="fas fa-user" style="color:#3b82f6;font-size:18px;"></i>
 </div>
 <div>
-<div style="font-size:10px;color:#0f172a;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:4px;">
+<div style="font-size:10px;color:#0f172a;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:4px;font-family:var(--font-mono);">
 <i class="fas fa-user-circle"></i> Kamu Pernah Pakai
 </div>
 <div style="display:flex;align-items:baseline;gap:4px;">
-<span id="user-counter" style="font-size:22px;font-weight:900;color:#0f172a;">0</span>
-<span style="font-size:11px;font-weight:700;color:#0f172a;">kali</span>
+<span id="user-counter" style="font-size:22px;font-weight:900;color:#0f172a;font-family:var(--font);">0</span>
+<span style="font-size:11px;font-weight:700;color:#0f172a;font-family:var(--font);">kali</span>
 </div>
 </div>
 </div>
 <div style="text-align:right;">
-<div style="font-size:9px;color:#0f172a;font-weight:700;">Terakhir pakai:</div>
-<div id="last-used" style="font-size:10px;font-weight:700;color:#0f172a;">-</div>
+<div style="font-size:9px;color:#0f172a;font-weight:700;font-family:var(--font);">Terakhir pakai:</div>
+<div id="last-used" style="font-size:10px;font-weight:700;color:#0f172a;font-family:var(--font);">-</div>
 </div>
 </div>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-<button id="btnKirimTop" class="btn-neo btn-black" style="font-size:11px;"><i class="fas fa-envelope"></i> Kirim Link</button>
-<button id="btnVerifTop" class="btn-neo btn-outline" style="font-size:11px;"><i class="fas fa-shield-halved"></i> Verifikasi</button>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;" class="fade-up">
+<button id="btnKirimTop" class="btn-neo btn-black"><i class="fas fa-envelope"></i> Kirim Link</button>
+<button id="btnVerifTop" class="btn-neo btn-outline"><i class="fas fa-shield-halved"></i> Verifikasi</button>
 </div>
 
-<div style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:18px;box-shadow:3px 3px 0px #0f172a;margin-top:16px;display:flex;flex-direction:column;gap:14px;">
-<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">LANGKAH 1 — KIRIM MAGIC LINK</div>
+<div class="card-neo fade-up" style="margin-top:16px;padding:18px;display:flex;flex-direction:column;gap:14px;">
+<div style="font-size:10px;font-weight:700;color:var(--text-sub);text-transform:uppercase;letter-spacing:1px;font-family:var(--font-mono);">LANGKAH 1 — KIRIM MAGIC LINK</div>
 <div>
-<label style="display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:#0f172a;">Alamat Gmail</label>
-<input type="email" id="emailInput" placeholder="user@gmail.com" style="width:100%;border:2px solid #0f172a;border-radius:12px;padding:12px 14px;font-size:13px;outline:none;background:#fff;color:#0f172a;">
+<label style="display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:var(--text);font-family:var(--font);">Alamat Gmail</label>
+<input type="email" id="emailInput" placeholder="user@gmail.com">
 </div>
-<button id="btnKirimLink" class="btn-neo btn-green" style="font-size:13px;"><i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email</button>
-<button id="btnTempelLink" class="btn-neo btn-outline" style="font-size:13px;"><i class="fas fa-arrow-right"></i> Tempel Magic Link</button>
+<button id="btnKirimLink" class="btn-neo btn-green"><i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email</button>
+<button id="btnTempelLink" class="btn-neo btn-outline">Tempel Magic Link <i class="fas fa-arrow-right"></i></button>
 </div>
 
-<div class="terminal-box" style="margin-top:16px;">
+<div class="terminal-box fade-up" style="margin-top:16px;">
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;border-bottom:1px solid #334155;padding-bottom:4px;opacity:0.7;">
 <span>>_ am_terminal.log</span>
 <span><i class="fas fa-copy"></i> Salin</span>
@@ -201,55 +197,55 @@ try {
 </div>
 </div>
 
-<div style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:18px;box-shadow:3px 3px 0px #0f172a;margin-top:16px;">
-<div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;margin-bottom:14px;border-bottom:2px solid #e2e8f0;padding-bottom:8px;color:#0f172a;">
-<i class="fas fa-info-circle" style="color:#3b82f6;"></i> PANDUAN PENGGUNAAN
+<div class="card-neo fade-up" style="margin-top:16px;padding:18px;">
+<div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;margin-bottom:14px;border-bottom:2px solid var(--bg-grid);padding-bottom:8px;color:var(--text);font-family:var(--font);">
+<i class="fas fa-info-circle" style="color:var(--accent-blue);"></i> PANDUAN PENGGUNAAN
 </div>
 <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;">
-<div class="icon-badge" style="background:#a3e635;color:#0f172a;font-weight:700;font-size:12px;">1</div>
+<div class="icon-badge" style="background:var(--accent);color:#0f172a;font-weight:700;font-size:12px;">1</div>
 <div>
-<div style="font-size:11px;font-weight:700;color:#0f172a;">MASUKKAN EMAIL</div>
-<div style="font-size:10px;color:#64748b;margin-top:2px;">Ketik alamat Gmail kamu. Sistem memicu pengiriman magic link.</div>
+<div style="font-size:11px;font-weight:700;color:var(--text);font-family:var(--font);">MASUKKAN EMAIL</div>
+<div style="font-size:10px;color:var(--text-sub);margin-top:2px;font-family:var(--font);">Ketik alamat Gmail kamu. Sistem memicu pengiriman magic link.</div>
 </div>
 </div>
 <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;">
-<div class="icon-badge" style="background:#a3e635;color:#0f172a;font-weight:700;font-size:12px;">2</div>
+<div class="icon-badge" style="background:var(--accent);color:#0f172a;font-weight:700;font-size:12px;">2</div>
 <div>
-<div style="font-size:11px;font-weight:700;color:#0f172a;">SALIN DARI EMAIL</div>
-<div style="font-size:10px;color:#64748b;margin-top:2px;">Buka inbox Gmail, salin tautan "Sign In" dari Alight Motion.</div>
+<div style="font-size:11px;font-weight:700;color:var(--text);font-family:var(--font);">SALIN DARI EMAIL</div>
+<div style="font-size:10px;color:var(--text-sub);margin-top:2px;font-family:var(--font);">Buka inbox Gmail, salin tautan "Sign In" dari Alight Motion.</div>
 </div>
 </div>
 <div style="display:flex;gap:12px;align-items:flex-start;">
-<div class="icon-badge" style="background:#a3e635;color:#0f172a;font-weight:700;font-size:12px;">3</div>
+<div class="icon-badge" style="background:var(--accent);color:#0f172a;font-weight:700;font-size:12px;">3</div>
 <div>
-<div style="font-size:11px;font-weight:700;color:#0f172a;">AKTIVASI OTOMATIS</div>
-<div style="font-size:10px;color:#64748b;margin-top:2px;">Tempel link di tab Verifikasi lalu tekan Proses.</div>
+<div style="font-size:11px;font-weight:700;color:var(--text);font-family:var(--font);">AKTIVASI OTOMATIS</div>
+<div style="font-size:10px;color:var(--text-sub);margin-top:2px;font-family:var(--font);">Tempel link di tab Verifikasi lalu tekan Proses.</div>
 </div>
 </div>
 </div>
-</div>
+    </div></div>
 
 <!-- TAB VERIFIKASI -->
 <div id="tab-verif" class="tab-content">
-<div style="text-align:center;padding-top:8px;">
-<span style="background:#fde047;border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;">
+<div style="text-align:center;padding-top:8px;" class="fade-up">
+<span style="background:var(--accent-2);border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;font-family:var(--font-mono);color:#0f172a;">
 <i class="fas fa-shield-halved"></i> VERIFIKASI LINK
 </span>
-<h2 style="font-size:28px;font-weight:900;line-height:1.1;margin:0;color:#0f172a;">Tempel Magic Link</h2>
-<p style="font-size:11px;color:#475569;margin-top:8px;padding:0 16px;">Tempel magic link yang Anda terima di Gmail.</p>
+<h2 style="font-size:28px;font-weight:900;line-height:1.1;margin:0;color:var(--text);font-family:var(--font);">Tempel Magic Link</h2>
+<p style="font-size:11px;color:var(--text-sub);margin-top:8px;padding:0 16px;font-family:var(--font);">Tempel magic link yang Anda terima di Gmail.</p>
 </div>
 
-<div style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:18px;box-shadow:3px 3px 0px #0f172a;margin-top:16px;display:flex;flex-direction:column;gap:14px;">
-<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">LANGKAH 2 — VERIFIKASI MAGIC LINK</div>
+<div class="card-neo fade-up" style="margin-top:16px;padding:18px;display:flex;flex-direction:column;gap:14px;">
+<div style="font-size:10px;font-weight:700;color:var(--text-sub);text-transform:uppercase;letter-spacing:1px;font-family:var(--font-mono);">LANGKAH 2 — VERIFIKASI MAGIC LINK</div>
 <div>
-<label style="display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:#0f172a;">Tempel Magic Link dari Email</label>
-<input type="url" id="linkInput" placeholder="https://alight-creative.firebaseapp.com/..." style="width:100%;border:2px solid #0f172a;border-radius:12px;padding:12px 14px;font-size:13px;outline:none;background:#fff;color:#0f172a;">
+<label style="display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:var(--text);font-family:var(--font);">Tempel Magic Link dari Email</label>
+<input type="url" id="linkInput" placeholder="https://alight-creative.firebaseapp.com/...">
 </div>
-<button id="btnVerif" class="btn-neo btn-green" style="font-size:13px;"><i class="fas fa-shield-halved"></i> Proses Verifikasi</button>
-<button id="btnKembali" class="btn-neo btn-outline" style="font-size:13px;"><i class="fas fa-arrow-left"></i> Kembali ke Kirim Email</button>
+<button id="btnVerif" class="btn-neo btn-green"><i class="fas fa-shield-halved"></i> Proses Verifikasi</button>
+<button id="btnKembali" class="btn-neo btn-outline"><i class="fas fa-arrow-left"></i> Kembali ke Kirim Email</button>
 </div>
 
-<div class="terminal-box" style="margin-top:16px;">
+<div class="terminal-box fade-up" style="margin-top:16px;">
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;border-bottom:1px solid #334155;padding-bottom:4px;opacity:0.7;">
 <span>>_ verif_terminal.log</span>
 <span><i class="fas fa-copy"></i> Salin</span>
@@ -264,34 +260,55 @@ try {
 
 <!-- TAB BULK -->
 <div id="tab-bulk" class="tab-content">
-<div style="text-align:center;padding-top:8px;">
-<span style="background:#fde047;border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;">
+<div style="text-align:center;padding-top:8px;" class="fade-up">
+<span style="background:var(--accent-2);border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;font-family:var(--font-mono);color:#0f172a;">
 <i class="fas fa-layer-group"></i> BULK GENERATOR
 </span>
-<h2 style="font-size:28px;font-weight:900;line-height:1.1;margin:0;color:#0f172a;">Generate Massal<br>Akun Premium</h2>
-<p style="font-size:11px;color:#475569;margin-top:8px;">Maks 5 akun per proses.</p>
+<h2 style="font-size:28px;font-weight:900;line-height:1.1;margin:0;color:var(--text);font-family:var(--font);">Generate Massal<br>Akun Premium</h2>
+<p style="font-size:11px;color:var(--text-sub);margin-top:8px;font-family:var(--font);">Maks 5 akun per proses.</p>
 </div>
 
-<div style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:18px;box-shadow:3px 3px 0px #0f172a;margin-top:16px;display:flex;flex-direction:column;gap:14px;">
-<div style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">KONFIGURASI GENERATE</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;" class="fade-up">
+<div class="card-neo" style="padding:14px;">
+<div style="font-size:10px;color:var(--text-sub);font-weight:700;text-transform:uppercase;font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">
+<i class="fas fa-globe-asia" style="color:var(--accent-blue);"></i> Global
+</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px;">
+<span id="total-global-bulk" style="font-size:28px;font-weight:900;color:var(--text);font-family:var(--font);">0</span>
+<i class="fas fa-trophy" style="color:var(--text-muted);font-size:18px;"></i>
+</div>
+</div>
+<div class="card-neo" style="padding:14px;background:var(--accent-2);">
+<div style="font-size:10px;color:#78350f;font-weight:700;text-transform:uppercase;font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">
+<i class="fas fa-calendar-day"></i> Hari Ini
+</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px;">
+<span id="total-hari-ini-bulk" style="font-size:28px;font-weight:900;color:#0f172a;font-family:var(--font);">0</span>
+<i class="fas fa-clock" style="color:#78350f;font-size:18px;"></i>
+</div>
+</div>
+</div>
+
+<div class="card-neo fade-up" style="margin-top:16px;padding:18px;display:flex;flex-direction:column;gap:14px;">
+<div style="font-size:10px;font-weight:700;color:var(--text-sub);text-transform:uppercase;letter-spacing:1px;font-family:var(--font-mono);">KONFIGURASI GENERATE</div>
 <div>
-<label style="display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:#0f172a;">Jumlah Akun (1-5)</label>
-<div style="display:flex;border:2px solid #0f172a;border-radius:12px;overflow:hidden;">
+<label style="display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:var(--text);font-family:var(--font);">Jumlah Akun (1-5)</label>
+<div style="display:flex;border:var(--card-border);border-radius:var(--radius-sm);overflow:hidden;">
 <button type="button" id="btnMinus" class="qty-btn">−</button>
-<input type="number" id="jumlahAkun" value="1" readonly style="flex:1;text-align:center;font-weight:700;font-size:20px;border:none;outline:none;background:#fff;color:#0f172a;">
+<input type="number" id="jumlahAkun" value="1" readonly style="flex:1;text-align:center;font-weight:700;font-size:20px;border:none;outline:none;background:var(--card-bg);color:var(--text);font-family:var(--font);">
 <button type="button" id="btnPlus" class="qty-btn">+</button>
 </div>
 </div>
-<button id="btnGenerate" class="btn-neo btn-green" style="font-size:13px;"><i class="fas fa-bolt"></i> Generate Akun Sekarang</button>
-<div id="hasilBulk" style="background:#f8fafc;border:2px dashed #94a3b8;border-radius:12px;padding:24px;text-align:center;">
+<button id="btnGenerate" class="btn-neo btn-green"><i class="fas fa-bolt"></i> Generate Akun Sekarang</button>
+<div id="hasilBulk" style="background:var(--bg);border:2px dashed var(--text-muted);border-radius:var(--radius);padding:24px;text-align:center;">
 <div style="display:flex;flex-direction:column;align-items:center;">
-<i class="fas fa-layer-group" style="font-size:30px;color:#cbd5e1;margin-bottom:8px;"></i>
-<div style="font-size:11px;font-weight:700;color:#64748b;">Belum ada akun</div>
+<i class="fas fa-layer-group" style="font-size:30px;color:var(--text-muted);margin-bottom:8px;"></i>
+<div style="font-size:11px;font-weight:700;color:var(--text-sub);font-family:var(--font);">Belum ada akun</div>
 </div>
 </div>
 </div>
 
-<div class="terminal-box" style="margin-top:16px;">
+<div class="terminal-box fade-up" style="margin-top:16px;">
 <div style="display:flex;justify-content:space-between;margin-bottom:8px;border-bottom:1px solid #334155;padding-bottom:4px;opacity:0.7;">
 <span>>_ bulk_terminal.log</span>
 <span><i class="fas fa-copy"></i> Salin</span>
@@ -306,67 +323,67 @@ try {
 
 <!-- TAB DOCS -->
 <div id="tab-docs" class="tab-content">
-<div style="text-align:center;padding-top:8px;">
-<span style="background:#fde047;border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;">
+<div style="text-align:center;padding-top:8px;" class="fade-up">
+<span style="background:var(--accent-2);border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;font-family:var(--font-mono);color:#0f172a;">
 <i class="fas fa-book"></i> DOKUMENTASI
 </span>
-<h2 style="font-size:28px;font-weight:900;margin:0;color:#0f172a;">Panduan & FAQ</h2>
+<h2 style="font-size:28px;font-weight:900;margin:0;color:var(--text);font-family:var(--font);">Panduan & FAQ</h2>
 </div>
-<div style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:18px;box-shadow:3px 3px 0px #0f172a;margin-top:16px;">
-<div style="font-size:13px;font-weight:700;border-bottom:2px solid #e2e8f0;padding-bottom:8px;color:#0f172a;">Apa itu PadilSync?</div>
-<p style="font-size:11px;color:#64748b;margin-top:8px;">Tools otomatisasi aktivasi Alight Motion Premium.</p>
+<div class="card-neo fade-up" style="margin-top:16px;padding:18px;">
+<div style="font-size:13px;font-weight:700;border-bottom:2px solid var(--bg-grid);padding-bottom:8px;color:var(--text);font-family:var(--font);">Apa itu PadilSync?</div>
+<p style="font-size:11px;color:var(--text-sub);margin-top:8px;font-family:var(--font);">Tools otomatisasi aktivasi Alight Motion Premium.</p>
 </div>
 </div>
 
 <!-- TAB COMMUNITY -->
 <div id="tab-community" class="tab-content">
-<div style="text-align:center;padding-top:8px;">
-<span style="background:#fde047;border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;">
+<div style="text-align:center;padding-top:8px;" class="fade-up">
+<span style="background:var(--accent-2);border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;font-family:var(--font-mono);color:#0f172a;">
 <i class="fas fa-users"></i> KOMUNITAS
 </span>
-<h2 style="font-size:28px;font-weight:900;margin:0;color:#0f172a;">Gabung Komunitas</h2>
+<h2 style="font-size:28px;font-weight:900;margin:0;color:var(--text);font-family:var(--font);">Gabung Komunitas</h2>
 </div>
 
-<a href="https://whatsapp.com/channel/0029Vb9o4dkBFLga6aVcXY25" target="_blank" style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:14px;box-shadow:3px 3px 0px #0f172a;display:flex;align-items:center;gap:12px;text-decoration:none;margin-top:16px;">
-<div class="icon-badge" style="background:#25D366;color:#fff;border-color:#0f172a;"><i class="fab fa-whatsapp"></i></div>
+<a href="https://whatsapp.com/channel/0029Vb9o4dkBFLga6aVcXY25" target="_blank" class="card-neo fade-up" style="padding:14px;display:flex;align-items:center;gap:12px;text-decoration:none;margin-top:16px;">
+<div class="icon-badge" style="background:#25D366;color:#fff;border:none;"><i class="fab fa-whatsapp"></i></div>
 <div style="flex:1;">
-<div style="font-size:11px;font-weight:700;color:#0f172a;">Saluran WhatsApp PadilSync</div>
-<div style="font-size:10px;color:#64748b;">Ikuti untuk update terbaru</div>
+<div style="font-size:11px;font-weight:700;color:var(--text);font-family:var(--font);">Saluran WhatsApp PadilSync</div>
+<div style="font-size:10px;color:var(--text-sub);font-family:var(--font);">Ikuti untuk update terbaru</div>
 </div>
-<i class="fas fa-chevron-right" style="color:#94a3b8;font-size:12px;"></i>
+<i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px;"></i>
 </a>
 
-<a href="https://wa.me/6283182365070" target="_blank" style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:14px;box-shadow:3px 3px 0px #0f172a;display:flex;align-items:center;gap:12px;text-decoration:none;margin-top:8px;">
-<div class="icon-badge" style="background:#16a34a;color:#fff;border-color:#0f172a;"><i class="fas fa-headset"></i></div>
+<a href="https://wa.me/6283182365070" target="_blank" class="card-neo fade-up" style="padding:14px;display:flex;align-items:center;gap:12px;text-decoration:none;margin-top:8px;">
+<div class="icon-badge" style="background:#16a34a;color:#fff;border:none;"><i class="fas fa-headset"></i></div>
 <div style="flex:1;">
-<div style="font-size:11px;font-weight:700;color:#0f172a;">Contact Owner</div>
-<div style="font-size:10px;color:#64748b;">Chat langsung ke owner</div>
+<div style="font-size:11px;font-weight:700;color:var(--text);font-family:var(--font);">Contact Owner</div>
+<div style="font-size:10px;color:var(--text-sub);font-family:var(--font);">Chat langsung ke owner</div>
 </div>
-<i class="fas fa-chevron-right" style="color:#94a3b8;font-size:12px;"></i>
+<i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px;"></i>
 </a>
 </div>
 
 <!-- TAB NONTON -->
 <div id="tab-nonton" class="tab-content">
-<div style="text-align:center;padding-top:8px;">
-<span style="background:#fde047;border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;">
+<div style="text-align:center;padding-top:8px;" class="fade-up">
+<span style="background:var(--accent-2);border:2px solid #000;padding:6px 16px;font-size:10px;font-weight:700;border-radius:8px;box-shadow:2px 2px 0px #000;display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;font-family:var(--font-mono);color:#0f172a;">
 <i class="fas fa-clapperboard"></i> NONTON FILM
 </span>
-<h2 style="font-size:28px;font-weight:900;margin:0;color:#0f172a;">Menu Nonton Film</h2>
-<p style="font-size:11px;color:#475569;margin-top:8px;">Nonton film, serial, dan anime langsung di sini.</p>
+<h2 style="font-size:28px;font-weight:900;margin:0;color:var(--text);font-family:var(--font);">Menu Nonton Film</h2>
+<p style="font-size:11px;color:var(--text-sub);margin-top:8px;font-family:var(--font);">Nonton film, serial, dan anime langsung di sini.</p>
 </div>
-<div style="background:#fff;border:2px solid #0f172a;border-radius:14px;padding:24px;box-shadow:3px 3px 0px #0f172a;margin-top:16px;text-align:center;">
-<i class="fas fa-clapperboard" style="font-size:40px;color:#cbd5e1;margin-bottom:12px;"></i>
-<div style="font-size:12px;font-weight:700;color:#0f172a;">Source code menyusul</div>
-<div style="font-size:10px;color:#64748b;margin-top:4px;">ZerozxStream akan ditambahkan di sini</div>
+<div class="card-neo fade-up" style="margin-top:16px;padding:24px;text-align:center;">
+<i class="fas fa-clapperboard" style="font-size:40px;color:var(--text-muted);margin-bottom:12px;"></i>
+<div style="font-size:12px;font-weight:700;color:var(--text);font-family:var(--font);">Source code menyusul</div>
+<div style="font-size:10px;color:var(--text-sub);margin-top:4px;font-family:var(--font);">ZerozxStream akan ditambahkan di sini</div>
 </div>
-<button id="btnKembaliKeAktivasi" class="btn-neo btn-black" style="font-size:13px;margin-top:16px;"><i class="fas fa-arrow-left"></i> Kembali ke Menu Aktivasi</button>
+<button id="btnKembaliKeAktivasi" class="btn-neo btn-black" style="margin-top:16px;"><i class="fas fa-arrow-left"></i> Kembali ke Menu Aktivasi</button>
 </div>
 
 </main>
 
 <!-- BOTTOM NAV -->
-<nav style="position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #0f172a;padding:8px 0;z-index:50;">
+<nav class="bottom-nav">
 <div style="max-width:448px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:4px;padding:0 16px;">
 <button class="nav-btn active" data-tab="activation"><i class="fas fa-bolt"></i><span>Activation</span></button>
 <button class="nav-btn" data-tab="bulk"><i class="fas fa-layer-group"></i><span>Bulk</span></button>
@@ -378,4 +395,4 @@ try {
 
 <script src="app.js"></script>
 </body>
-</html>
+                                                 </html>
