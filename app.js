@@ -1,3 +1,38 @@
+function toggleTheme() {
+    var body = document.body;
+    var isDark = body.classList.contains('dark');
+    if (isDark) {
+        body.classList.remove('dark');
+        localStorage.setItem('padilsync_theme', 'light');
+        document.getElementById('iconLight').style.display = 'none';
+        document.getElementById('iconDark').style.display = 'inline';
+    } else {
+        body.classList.add('dark');
+        localStorage.setItem('padilsync_theme', 'dark');
+        document.getElementById('iconLight').style.display = 'inline';
+        document.getElementById('iconDark').style.display = 'none';
+    }
+}
+
+// Load tema tersimpan saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    var savedTheme = localStorage.getItem('padilsync_theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('iconLight').style.display = 'inline';
+        document.getElementById('iconDark').style.display = 'none';
+    }
+});
+
+// Handle klik tab nonton (kembali ke aktivasi)
+document.addEventListener('DOMContentLoaded', function() {
+    var btnKembali = document.getElementById('btnKembaliKeAktivasi');
+    if (btnKembali) {
+        btnKembali.addEventListener('click', function() {
+            if (typeof switchTab === 'function') switchTab('activation');
+        });
+    }
+});
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ DOM Ready');
 
