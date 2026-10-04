@@ -277,16 +277,17 @@ if (btnKembaliKeAktivasi) btnKembaliKeAktivasi.addEventListener('click', functio
     var lastKirimTime = 0;
 var RATE_LIMIT_MS = 30000; // 30 detik
 
+var lastKirimTime = 0;
+var RATE_LIMIT_MS = 30000; // 30 detik
+
 var btnKirimLink = document.getElementById('btnKirimLink');
 if (btnKirimLink) {
     btnKirimLink.addEventListener('click', async function(){
         try {
-            // 🔥 RATE LIMIT CHECK
+            // Cek rate limit
             var now = Date.now();
             if (now - lastKirimTime < RATE_LIMIT_MS) {
-                var sisa = Math.ceil((RATE_LIMIT_MS - (now - lastKirimTime)) / 1000);
-                alert('⏳ Tunggu ' + sisa + ' detik lagi sebelum kirim ulang!');
-                return;
+                return; // tombol harusnya sudah disabled, tapi jaga-jaga
             }
             
             var email = document.getElementById('emailInput').value.trim();
@@ -294,24 +295,41 @@ if (btnKirimLink) {
             var btn = document.getElementById('btnKirimLink');
             if (!email || email.indexOf('@') === -1) { alert('Masukkan Gmail yang valid!'); return; }
             
+            // Simpan waktu sekarang
             lastKirimTime = now;
+            
+            // Disable tombol + countdown
             btn.disabled = true;
+            var sisaDetik = 30;
+            
+            // Update tombol tiap detik
+            var countdownInterval = setInterval(function(){
+                sisaDetik--;
+                if (sisaDetik <= 0) {
+                    clearInterval(countdownInterval);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
+                } else {
+                    btn.innerHTML = '<i class="fas fa-clock"></i> Tunggu ' + sisaDetik + 's';
+                }
+            }, 1000);
+            
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-            terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div>Memproses: <span class="text-white">' + email + '</span></div><div class="text-yellow-400">[PROCESS]</div>';
+            terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div>Memproses: <span style="color:#fff">' + email + '</span></div><div style="color:#fde047">[PROCESS]</div>';
             
             try {
                 await callAPI('/send', { gmail: email });
                 localStorage.setItem('padilsync_last_email', email);
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
-                terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div class="font-bold">[SUCCESS]</div><div>Magic link berhasil dikirim!</div>';
+                btn.innerHTML = '<i class="fas fa-clock"></i> Tunggu ' + sisaDetik + 's';
+                terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div class="font-bold">[SUCCESS]</div><div>Magic link berhasil dikirim!</div><div style="color:#fde047;margin-top:4px;">[INFO] Tunggu 30 detik sebelum kirim ulang.</div>';
                 tambahGlobalCounter(1);
                 tambahUserCounter();
                 document.getElementById('emailInput').value = '';
             } catch (error) {
+                clearInterval(countdownInterval);
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
-                terminal.innerHTML = '<div class="text-red-400 font-bold">[ERROR]</div><div>' + error.message + '</div>';
+                terminal.innerHTML = '<div style="color:#f87171;font-weight:700;">[ERROR]</div><div>' + error.message + '</div>';
                 alert('Gagal: ' + error.message);
             }
         } catch(err) { console.error('KirimLink error:', err); }
