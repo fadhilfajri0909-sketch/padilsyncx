@@ -211,6 +211,10 @@ input:focus{box-shadow:0 0 0 4px rgba(163,230,53,0.4)}
         transform: translateX(-100%);
     }
 }
+nav, main, .bottom-nav {
+    position: relative;
+    z-index: 1;
+}
 /* ============================================ */
 /* 🔥 BACKGROUND LUAR ANGKASA ANIMASI 🔥 */
 /* ============================================ */
