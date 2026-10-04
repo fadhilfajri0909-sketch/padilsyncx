@@ -1,3 +1,8 @@
+// ============ RATE LIMIT ============
+var lastKirimTime = 0;
+var RATE_LIMIT_MS = 30000; // 30 detik
+var lastBulkTime = 0;
+var BULK_LIMIT_MS = 60000; // 60 detik
 function toggleTheme() {
     var body = document.body;
     var isDark = body.classList.contains('dark');
