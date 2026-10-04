@@ -78,15 +78,24 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch(e) { console.error('Battery error:', e); }
 
     function switchTab(tabName) {
-        try {
-            document.querySelectorAll('.tab-content').forEach(function(el){ el.classList.remove('active'); });
-            var target = document.getElementById('tab-' + tabName);
-            if (target) target.classList.add('active');
-            document.querySelectorAll('.nav-btn').forEach(function(el){ el.classList.remove('active'); });
-            var navBtn = document.querySelector('.nav-btn[data-tab="' + tabName + '"]');
-            if (navBtn) navBtn.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } catch(e) { console.error('SwitchTab error:', e); }
+    try {
+        document.querySelectorAll('.tab-content').forEach(function(el){ el.classList.remove('active'); });
+        var target = document.getElementById('tab-' + tabName);
+        if (target) {
+            target.classList.add('active');
+            // 🔥 RESTART ANIMASI
+            var slideElements = target.querySelectorAll('.slide-up');
+            slideElements.forEach(function(el) {
+                el.style.animation = 'none';
+                el.offsetHeight; // trigger reflow
+                el.style.animation = '';
+            });
+        }
+        document.querySelectorAll('.nav-btn').forEach(function(el){ el.classList.remove('active'); });
+        var navBtn = document.querySelector('.nav-btn[data-tab="' + tabName + '"]');
+        if (navBtn) navBtn.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch(e) { console.error('SwitchTab error:', e); }
     }
 
     document.querySelectorAll('.nav-btn').forEach(function(btn){
