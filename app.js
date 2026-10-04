@@ -274,35 +274,49 @@ if (btnKembaliKeAktivasi) btnKembaliKeAktivasi.addEventListener('click', functio
         });
     }
 
-    var btnKirimLink = document.getElementById('btnKirimLink');
-    if (btnKirimLink) {
-        btnKirimLink.addEventListener('click', async function(){
+    var lastKirimTime = 0;
+var RATE_LIMIT_MS = 30000; // 30 detik
+
+var btnKirimLink = document.getElementById('btnKirimLink');
+if (btnKirimLink) {
+    btnKirimLink.addEventListener('click', async function(){
+        try {
+            // 🔥 RATE LIMIT CHECK
+            var now = Date.now();
+            if (now - lastKirimTime < RATE_LIMIT_MS) {
+                var sisa = Math.ceil((RATE_LIMIT_MS - (now - lastKirimTime)) / 1000);
+                alert('⏳ Tunggu ' + sisa + ' detik lagi sebelum kirim ulang!');
+                return;
+            }
+            
+            var email = document.getElementById('emailInput').value.trim();
+            var terminal = document.getElementById('terminalContent');
+            var btn = document.getElementById('btnKirimLink');
+            if (!email || email.indexOf('@') === -1) { alert('Masukkan Gmail yang valid!'); return; }
+            
+            lastKirimTime = now;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+            terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div>Memproses: <span class="text-white">' + email + '</span></div><div class="text-yellow-400">[PROCESS]</div>';
+            
             try {
-                var email = document.getElementById('emailInput').value.trim();
-                var terminal = document.getElementById('terminalContent');
-                var btn = document.getElementById('btnKirimLink');
-                if (!email || email.indexOf('@') === -1) { alert('Masukkan Gmail yang valid!'); return; }
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
-                terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div>Memproses: <span class="text-white">' + email + '</span></div><div class="text-yellow-400">[PROCESS]</div>';
-                try {
-                    await callAPI('/send', { gmail: email });
-                        localStorage.setItem('padilsync_last_email', email);
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
-                    terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div class="font-bold">[SUCCESS]</div><div>Magic link berhasil dikirim!</div>';
-                    tambahGlobalCounter(1);
-                    tambahUserCounter();
-                    document.getElementById('emailInput').value = '';
-                } catch (error) {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
-                    terminal.innerHTML = '<div class="text-red-400 font-bold">[ERROR]</div><div>' + error.message + '</div>';
-                    alert('Gagal: ' + error.message);
-                }
-            } catch(err) { console.error('KirimLink error:', err); }
-        });
-    }
+                await callAPI('/send', { gmail: email });
+                localStorage.setItem('padilsync_last_email', email);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
+                terminal.innerHTML = '<div class="font-bold">[SYSTEM]</div><div class="font-bold">[SUCCESS]</div><div>Magic link berhasil dikirim!</div>';
+                tambahGlobalCounter(1);
+                tambahUserCounter();
+                document.getElementById('emailInput').value = '';
+            } catch (error) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Magic Link ke Email';
+                terminal.innerHTML = '<div class="text-red-400 font-bold">[ERROR]</div><div>' + error.message + '</div>';
+                alert('Gagal: ' + error.message);
+            }
+        } catch(err) { console.error('KirimLink error:', err); }
+    });
+}
 
     var btnVerif = document.getElementById('btnVerif');
     if (btnVerif) {
@@ -334,64 +348,81 @@ if (!savedEmail) { alert('Kirim link dulu di tab Activation!'); return; }
         });
     }
 
-    var btnGenerate = document.getElementById('btnGenerate');
-    if (btnGenerate) {
-        btnGenerate.addEventListener('click', async function(){
-            try {
-                if (isGenerating) return;
-                isGenerating = true;
-                var hasilBox = document.getElementById('hasilBulk');
-                var btnGen = document.getElementById('btnGenerate');
-                btnGen.disabled = true;
-                btnMinus.disabled = true;
-                btnPlus.disabled = true;
-                btnGen.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
-                hasilBox.innerHTML = '<div class="loader-box"><div class="spinner"></div><div class="text-sm font-bold text-gray-500">Memproses Akun...</div></div>';
-                try {
-                    var result = await callAPI('/bulk', { total: jumlahAkun });
-                    var accounts = [];
-                    if (Array.isArray(result)) accounts = result;
-                    else if (result.data && Array.isArray(result.data)) accounts = result.data;
-                    else if (result.accounts && Array.isArray(result.accounts)) accounts = result.accounts;
-                    else {
-                        for (var i = 1; i <= jumlahAkun; i++) {
-                            var r = Math.random().toString(36).substring(2, 10);
-                            accounts.push({ email: 'amprem' + r + '@akunlama.com', inbox: 'https://akunlama.com/inbox/amprem' + r + '/list' });
-                        }
-                    }
-                    dataAkunTerakhir = accounts.map(function(acc, i){
-                        return {
-                            email: acc.email || acc.gmail || ('akun' + (i+1) + '@akunlama.com'),
-                            inbox: acc.inbox || acc.inbox_url || acc.link || ('https://akunlama.com/inbox/akun' + (i+1) + '/list')
-                        };
-                    });
-                    var html = '';
-                    dataAkunTerakhir.forEach(function(akun, i){
-                        html += '<div class="flex flex-col p-3 mb-2 rounded-lg border-2" style="border-color:#3b82f6">' +
-                            '<div class="flex items-center gap-2 mb-1"><i class="fas fa-check-circle text-green-500"></i><span class="text-[10px] font-bold text-gray-500">AKUN ' + (i+1) + '</span></div>' +
-                            '<div class="text-xs font-bold break-all mb-1">' + akun.email + '</div>' +
-                            '<div class="flex items-start gap-1 text-[10px] text-gray-500"><i class="fas fa-envelope mt-0.5"></i><span>Inbox: <a href="' + akun.inbox + '" target="_blank" class="underline" style="color:#3b82f6">' + akun.inbox + '</a></span></div>' +
-                            '</div>';
-                    });
-                    hasilBox.innerHTML = '<div class="text-left"><div class="text-[10px] font-bold text-gray-500 mb-2 uppercase">Hasil Generate (' + dataAkunTerakhir.length + ' Akun)</div>' + html + '</div>';
-                    tambahGlobalCounter(dataAkunTerakhir.length);
-                    for (var j = 0; j < dataAkunTerakhir.length; j++) tambahUserCounter();
-                    btnGen.disabled = false;
-                    btnGen.innerHTML = '<i class="fas fa-bolt"></i> Generate Akun Sekarang';
-                    btnMinus.disabled = (jumlahAkun <= 1);
-                    btnPlus.disabled = (jumlahAkun >= 5);
-                    isGenerating = false;
-                } catch (error) {
-                    btnGen.disabled = false;
-                    btnGen.innerHTML = '<i class="fas fa-bolt"></i> Generate Akun Sekarang';
-                    btnMinus.disabled = (jumlahAkun <= 1);
-                    btnPlus.disabled = (jumlahAkun >= 5);
-                    isGenerating = false;
-                    hasilBox.innerHTML = '<div class="text-red-500 text-center"><i class="fas fa-exclamation-triangle text-3xl mb-2"></i><div class="text-xs font-bold">Gagal Generate</div><div class="text-[10px] mt-1">' + error.message + '</div></div>';
-                }
-            } catch(err) { console.error('Generate error:', err); }
-        });
-    }
+    var lastBulkTime = 0;
+var BULK_LIMIT_MS = 60000;
 
+var btnGenerate = document.getElementById('btnGenerate');
+if (btnGenerate) {
+    btnGenerate.addEventListener('click', async function(){
+        try {
+            // 🔥 RATE LIMIT CHECK
+            var now = Date.now();
+            if (now - lastBulkTime < BULK_LIMIT_MS) {
+                var sisa = Math.ceil((BULK_LIMIT_MS - (now - lastBulkTime)) / 1000);
+                alert('⏳ Tunggu ' + sisa + ' detik lagi sebelum bulk generate!');
+                return;
+            }
+            
+            if (isGenerating) return;
+            isGenerating = true;
+            lastBulkTime = now;
+            
+            var hasilBox = document.getElementById('hasilBulk');
+            var btnGen = document.getElementById('btnGenerate');
+            btnGen.disabled = true;
+            btnMinus.disabled = true;
+            btnPlus.disabled = true;
+            btnGen.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+            hasilBox.innerHTML = '<div class="loader-box"><div class="spinner"></div><div class="text-sm font-bold text-gray-500">Memproses Akun...</div></div>';
+            
+            try {
+                var result = await callAPI('/bulk', { total: jumlahAkun });
+                var accounts = [];
+                if (Array.isArray(result)) accounts = result;
+                else if (result.data && Array.isArray(result.data)) accounts = result.data;
+                else if (result.accounts && Array.isArray(result.accounts)) accounts = result.accounts;
+                else {
+                    for (var i = 1; i <= jumlahAkun; i++) {
+                        var r = Math.random().toString(36).substring(2, 10);
+                        accounts.push({ email: 'amprem' + r + '@akunlama.com', inbox: 'https://akunlama.com/inbox/amprem' + r + '/list' });
+                    }
+                }
+                dataAkunTerakhir = accounts.map(function(acc, i){
+                    return {
+                        email: acc.email || acc.gmail || ('akun' + (i+1) + '@akunlama.com'),
+                        inbox: acc.inbox || acc.inbox_url || acc.link || ('https://akunlama.com/inbox/akun' + (i+1) + '/list')
+                    };
+                });
+                
+                var html = '';
+                dataAkunTerakhir.forEach(function(akun, i){
+                    html += '<div class="flex flex-col p-3 mb-2 rounded-lg border-2" style="border-color:#3b82f6">' +
+                        '<div class="flex items-center gap-2 mb-1"><i class="fas fa-check-circle text-green-500"></i><span class="text-[10px] font-bold text-gray-500">AKUN ' + (i+1) + '</span></div>' +
+                        '<div class="text-xs font-bold break-all mb-1">' + akun.email + '</div>' +
+                        '<div class="flex items-start gap-1 text-[10px] text-gray-500"><i class="fas fa-envelope mt-0.5"></i><span>Inbox: <a href="' + akun.inbox + '" target="_blank" class="underline" style="color:#3b82f6">' + akun.inbox + '</a></span></div>' +
+                        '</div>';
+                });
+                
+                hasilBox.innerHTML = '<div class="text-left"><div class="text-[10px] font-bold text-gray-500 mb-2 uppercase">Hasil Generate (' + dataAkunTerakhir.length + ' Akun)</div>' + html + '</div>';
+                
+                tambahGlobalCounter(dataAkunTerakhir.length);
+                for (var j = 0; j < dataAkunTerakhir.length; j++) tambahUserCounter();
+                
+                btnGen.disabled = false;
+                btnGen.innerHTML = '<i class="fas fa-bolt"></i> Generate Akun Sekarang';
+                btnMinus.disabled = (jumlahAkun <= 1);
+                btnPlus.disabled = (jumlahAkun >= 5);
+                isGenerating = false;
+            } catch (error) {
+                btnGen.disabled = false;
+                btnGen.innerHTML = '<i class="fas fa-bolt"></i> Generate Akun Sekarang';
+                btnMinus.disabled = (jumlahAkun <= 1);
+                btnPlus.disabled = (jumlahAkun >= 5);
+                isGenerating = false;
+                hasilBox.innerHTML = '<div class="text-red-500 text-center"><i class="fas fa-exclamation-triangle text-3xl mb-2"></i><div class="text-xs font-bold">Gagal Generate</div><div class="text-[10px] mt-1">' + error.message + '</div></div>';
+            }
+        } catch(err) { console.error('Generate error:', err); }
+    });
+}
     console.log('✅ PadilSync siap!');
 });
